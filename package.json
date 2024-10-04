@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "npx json-server db.json",
+    "test": "npx playwright test",
     "ui-mode": "npx playwright test --ui"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "@types/node": "^22.5.5"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "json-server": "^1.0.0-beta.2"
   }
 }

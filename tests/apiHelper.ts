@@ -124,7 +124,7 @@ export class APIHelper {
     };
 
     async createRoom(request: APIRequestContext, payload: object) {
-        const createResponse = await request.post(`${this.baseUrl}/room/new`, {
+        const createRoomResponse = await request.post(`${this.baseUrl}/room/new`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-user-auth': JSON.stringify({
@@ -134,11 +134,11 @@ export class APIHelper {
             },
             data: JSON.stringify(payload)
         });
-        return createResponse;
+        return createRoomResponse;
     };
 
     async editRoom(request: APIRequestContext, id: string, payload: object) {
-        const response = await request.put(`${this.baseUrl}/room/${id}`, {
+        const editResponse = await request.put(`${this.baseUrl}/room/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-user-auth': JSON.stringify({
@@ -148,8 +148,22 @@ export class APIHelper {
             },
             data: JSON.stringify(payload)
         });
-        return response;
+        return editResponse;
     };
+
+    async deleteRoomById(request: APIRequestContext, id: string) {
+        const deleteRoomResponse = await request.delete(`${this.baseUrl}/room/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+        });
+        return deleteRoomResponse;
+    };
+    
 
     
 

@@ -69,6 +69,10 @@ test.describe.serial('Tester Hotel application - api tests', () => {
     test('Test Case 04 - Delete specific client by id', async ({ request }) => {
         const getClients = await apiHelper.getAllClients(request);
         const allClients = await getClients.json();
+        if (allClients.length < 2) {
+            throw new Error("Not enough rooms to delete the second last room.");
+        }
+
         const lastButOneID = allClients[allClients.length - 2].id;
 
         const deleteClient = await apiHelper.deleteClientById(request, lastButOneID);
@@ -102,6 +106,9 @@ test.describe.serial('Tester Hotel application - api tests', () => {
     test('Test Case 07 - Edit room', async ({ request }) => {
         const getRooms = await apiHelper.getAllRooms(request);
         const allRooms = await getRooms.json();
+        if (allRooms.length < 2) {
+            throw new Error("Not enough rooms to delete the second last room.");
+        }
         const lastButOneID = allRooms[allRooms.length - 2];
         // console.log("lastButOneID:", lastButOneID)
 
@@ -118,5 +125,22 @@ test.describe.serial('Tester Hotel application - api tests', () => {
         expect(await getRoomById.json()).toEqual(payload);
     });
 
+    test('Test Case 08 - Delete room', async ({ request }) => {
+        const getRooms = await apiHelper.getAllRooms(request);
+        const allRooms = await getRooms.json();
+
+        if (allRooms.length < 2) {
+            throw new Error("Not enough rooms to delete the second last room.");
+        }
+        
+        const lastButOneID = allRooms[allRooms.length - 2].id;
+
+        const deleteRoom = await apiHelper.deleteRoomById(request, lastButOneID);
+        expect(deleteRoom.ok()).toBeTruthy();
+
+        const getRoomById = await apiHelper.getRoomById(request, lastButOneID);
+        expect(getRoomById.status()).toBe(401);
+
+    });
 
 });

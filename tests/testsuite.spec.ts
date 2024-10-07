@@ -66,4 +66,16 @@ test.describe('Tester Hotel application - api tests', () => {
         }
     });
 
+    test('Test Case 04 - delete specific client by id', async ({ request }) => {
+        const getClients = await apiHelper.getAllClients(request);
+        const allClients = await getClients.json();
+        const lastButOneID = allClients[allClients.length - 2].id;
+
+        const deleteClient = await apiHelper.deleteClientById(request, lastButOneID);
+        expect(deleteClient.ok()).toBeTruthy();
+
+        const getClientById = await apiHelper.getClientById(request, lastButOneID);
+        expect(getClientById.status()).toBe(401);
+    });
+
 });

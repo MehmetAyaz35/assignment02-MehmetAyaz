@@ -83,6 +83,19 @@ export class APIHelper {
         return clientIds;
     }
 
+    async deleteClientById(request: APIRequestContext, id: string) {
+        const response = await request.delete(`${this.baseUrl}/client/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+        });
+        return response;
+    };
+
 
 
     

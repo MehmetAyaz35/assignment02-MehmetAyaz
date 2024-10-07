@@ -84,7 +84,7 @@ export class APIHelper {
     }
 
     async deleteClientById(request: APIRequestContext, id: string) {
-        const response = await request.delete(`${this.baseUrl}/client/${id}`, {
+        const deleteClientResponse = await request.delete(`${this.baseUrl}/client/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-user-auth': JSON.stringify({
@@ -93,12 +93,12 @@ export class APIHelper {
                 })
             },
         });
-        return response;
+        return deleteClientResponse;
     };
    
     
     async getAllRooms(request: APIRequestContext) {
-        const response = await request.get(`${this.baseUrl}/rooms`, {
+        const roomsResponse = await request.get(`${this.baseUrl}/rooms`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-user-auth': JSON.stringify({
@@ -107,7 +107,34 @@ export class APIHelper {
                 })
             }
         });
-        return response;
+        return roomsResponse;
+    };
+
+    async getRoomById(request:APIRequestContext, id:string){
+        const roomIdResponse = await request.get(`${this.baseUrl}/room/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth':JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            }
+        })
+        return roomIdResponse;
+    };
+
+    async createRoom(request: APIRequestContext, payload: object) {
+        const createResponse = await request.post(`${this.baseUrl}/room/new`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload)
+        });
+        return createResponse;
     };
 
 

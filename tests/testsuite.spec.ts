@@ -83,5 +83,21 @@ test.describe.serial('Tester Hotel application - api tests', () => {
         expect(getRooms.status()).toBe(200);
     });
 
+    test('Test Case 06 - Create new room', async ({ request }) => {
+        const payload = fakeDataGenerator.generateRoomData();
+        const createRoom = await apiHelper.createRoom(request, payload);
+        expect(createRoom.ok()).toBeTruthy();
+        expect(await createRoom.json()).toMatchObject(
+            expect.objectContaining(payload)
+        );
+
+        const getRooms = await apiHelper.getAllRooms(request);
+        expect(await getRooms.json()).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining(payload)
+            ])
+        );
+    });
+
 
 });

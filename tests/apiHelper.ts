@@ -73,5 +73,18 @@ export class APIHelper {
         });
         return createClientresponse;
     };
+    
+    //take the IDs in the client list and collect them into an array
+    async getClientIds(request: APIRequestContext): Promise<string[]> {
+        const clientsResponse = await this.getAllClients(request);
+        const clientsData = await clientsResponse.json();
+        
+        const clientIds = clientsData.map((client: { id: string }) => client.id);
+        return clientIds;
+    }
+
+
+
+    
 
 };

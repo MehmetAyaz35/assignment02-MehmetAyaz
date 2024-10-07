@@ -51,4 +51,19 @@ test.describe('Tester Hotel application - api tests', () => {
         );
     });
 
+    test('Test Case 03 - Verify all client IDs exist', async ({ request }) => {
+
+        const clientIds = await apiHelper.getClientIds(request);
+        // console.log("Client IDs:", clientIds);
+    
+        // Verification test for each client ID
+        for (const clientId of clientIds) {
+            const clientResponse = await apiHelper.getClientById(request, clientId);
+            expect(clientResponse.status()).toBe(200);
+    
+            const clientData = await clientResponse.json();
+            expect(clientData.id).toBe(clientId); // Client ID verification
+        }
+    });
+
 });

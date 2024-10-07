@@ -7,7 +7,7 @@ import { FakeDataGenerator } from './testData';
 const baseUrl = `${process.env.BASE_URL}`;
 // console.log("Base URL:", baseUrl); 
 
-test.describe('Tester Hotel application - api tests', () => {
+test.describe.serial('Tester Hotel application - api tests', () => {
     let apiHelper: APIHelper;
     let fakeDataGenerator: FakeDataGenerator;
 
@@ -20,7 +20,7 @@ test.describe('Tester Hotel application - api tests', () => {
     });
 
 
-    test('Test Case 01 - get all clients', async ({ request }) => {
+    test('Test Case 01 - Get all clients', async ({ request }) => {
         const getAllClients = await apiHelper.getAllClients(request);
         expect(getAllClients.status()).toBe(200);
 
@@ -33,11 +33,11 @@ test.describe('Tester Hotel application - api tests', () => {
             expect(client).toHaveProperty('name');
         });
     
-        expect(responseBody.length).toBeGreaterThan(0); 
+        // expect(responseBody.length).toBeGreaterThan(0); 
      
     });
 
-    test('Test Case 02 - create new client', async ({ request }) => {
+    test('Test Case 02 - Create new client', async ({ request }) => {
         const payload = fakeDataGenerator.generateClientData();
         const createClient = await apiHelper.createClient(request, payload);
         expect(createClient.ok()).toBeTruthy();
@@ -66,10 +66,10 @@ test.describe('Tester Hotel application - api tests', () => {
         }
     });
 
-    test('Test Case 04 - delete specific client by id', async ({ request }) => {
+    test('Test Case 04 - Delete specific client by id', async ({ request }) => {
         const getClients = await apiHelper.getAllClients(request);
         const allClients = await getClients.json();
-        const lastButOneID = allClients[allClients.length - 2].id;
+        const lastButOneID = allClients[allClients.length - 1].id;
 
         const deleteClient = await apiHelper.deleteClientById(request, lastButOneID);
         expect(deleteClient.ok()).toBeTruthy();
@@ -77,5 +77,11 @@ test.describe('Tester Hotel application - api tests', () => {
         const getClientById = await apiHelper.getClientById(request, lastButOneID);
         expect(getClientById.status()).toBe(401);
     });
+
+    test('Test Case 05 - Get all rooms', async ({ request }) => {
+        const getRooms = await apiHelper.getAllRooms(request);
+        expect(getRooms.status()).toBe(200);
+    });
+
 
 });

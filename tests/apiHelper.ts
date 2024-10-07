@@ -95,6 +95,20 @@ export class APIHelper {
         });
         return response;
     };
+   
+    
+    async getAllRooms(request: APIRequestContext) {
+        const response = await request.get(`${this.baseUrl}/rooms`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            }
+        });
+        return response;
+    };
 
 
 

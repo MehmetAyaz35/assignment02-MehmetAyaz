@@ -7,27 +7,35 @@ export class APIHelper {
 
     constructor(baseUrl: string) {
         this.baseUrl = baseUrl;
+        
     }
 
     async login(request: APIRequestContext) {
-        const response = await request.post(`${this.baseUrl}/login`, {
+        const username = process.env.TEST_USERNAME;
+        const password = process.env.TEST_PASSWORD;
+        
+        if (!username || !password) {
+            throw new Error("Username or password is missing from environment variables.");
+        }
+        
+        const loginResponse = await request.post(`${this.baseUrl}/login`, {
             headers: {
                 'Content-Type': 'application/json'
             },
             data: JSON.stringify({
-                username: `${process.env.TEST_USERNAME}`,
-                password: `${process.env.TEST_PASSWORD}`
+                username: username,
+                password: password
             })
         });
-        const responseData = await response.json();
+        const responseData = await loginResponse.json();
         this.username = responseData.username;
         this.token = responseData.token;
-        return response;
+        return loginResponse;
     };
 
 
     async getAllClients(request: APIRequestContext) {
-        const response = await request.get(`${this.baseUrl}/clients`, {
+        const ClientsResponse = await request.get(`${this.baseUrl}/clients`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-user-auth': JSON.stringify({
@@ -36,7 +44,34 @@ export class APIHelper {
                 })
             }
         });
-        return response;
+        return ClientsResponse;
+    };
+
+    async getClientById(request: APIRequestContext, id: string) {
+        const ClientIdResponse = await request.get(`${this.baseUrl}/client/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+        });
+        return ClientIdResponse;
+    };
+
+    async createClient(request: APIRequestContext, payload: object) {
+        const createClientresponse = await request.post(`${this.baseUrl}/client/new`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload)
+        });
+        return createClientresponse;
     };
 
 };

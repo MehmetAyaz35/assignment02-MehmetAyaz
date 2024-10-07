@@ -44,8 +44,18 @@ export class FakeDataGenerator {
     editRoomData = (id: string) => {
         let payload = this.generateRoomData();
         payload['id'] = id;
-        
+
         return payload;
+    };
+
+    generateBillData = () => {
+        const value = faker.number.int({ min: 1, max: 50 });
+        const paid = faker.datatype.boolean();
+
+        return {
+            value: value,
+            paid: paid
+        };
     };
 
     

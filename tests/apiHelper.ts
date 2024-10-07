@@ -164,7 +164,59 @@ export class APIHelper {
         return deleteRoomResponse;
     };
     
+    async getAllBills(request: APIRequestContext) {
+        const response = await request.get(`${this.baseUrl}/bills`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            }
+        });
+        return response;
+    };
+
+    async getBillById(request: APIRequestContext, id: string) {
+        const billResponse = await request.get(`${this.baseUrl}/bill/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            }
+        });
+        return billResponse;
+    };
+
+    async createNewBill(request: APIRequestContext, payload: object) {
+        const CreateBillresponse = await request.post(`${this.baseUrl}/bill/new`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload)
+        });
+        return CreateBillresponse;
+    };
+
+    async editBill(request: APIRequestContext, id: string, payload: object) {
+        const editBillresponse = await request.put(`${this.baseUrl}/bill/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload)
+        });
+        return editBillresponse;
+    };
 
     
-
 };

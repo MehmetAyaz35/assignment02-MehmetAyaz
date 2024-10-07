@@ -143,4 +143,28 @@ test.describe.serial('Tester Hotel application - api tests', () => {
 
     });
 
+    test('Test Case 09 - Get all bills', async ({ request }) => {
+        const getBills = await apiHelper.getAllBills(request);
+        const getBillsData = await getBills.json();
+
+        expect(getBills.ok()).toBeTruthy();
+        expect(getBillsData.length).toBeGreaterThanOrEqual(1);
+    });
+
+    test('Test Case 10 - Create new bill', async ({ request }) => {
+        const payload = fakeDataGenerator.generateBillData();
+        const createNewBill = await apiHelper.createNewBill(request, payload);
+        expect(createNewBill.ok()).toBeTruthy();
+        expect(await createNewBill.json()).toMatchObject(payload);
+
+        const getBills = await apiHelper.getAllBills(request);
+        expect(await getBills.json()).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining(payload),
+            ])
+        );
+    });
+
+    
+
 });

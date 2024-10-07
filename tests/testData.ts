@@ -41,5 +41,12 @@ export class FakeDataGenerator {
         };
     };
 
+    editRoomData = (id: string) => {
+        let payload = this.generateRoomData();
+        payload['id'] = id;
+        
+        return payload;
+    };
+
     
 };

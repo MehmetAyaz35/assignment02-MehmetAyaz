@@ -69,7 +69,7 @@ test.describe.serial('Tester Hotel application - api tests', () => {
     test('Test Case 04 - Delete specific client by id', async ({ request }) => {
         const getClients = await apiHelper.getAllClients(request);
         const allClients = await getClients.json();
-        const lastButOneID = allClients[allClients.length - 1].id;
+        const lastButOneID = allClients[allClients.length - 2].id;
 
         const deleteClient = await apiHelper.deleteClientById(request, lastButOneID);
         expect(deleteClient.ok()).toBeTruthy();
@@ -97,6 +97,25 @@ test.describe.serial('Tester Hotel application - api tests', () => {
                 expect.objectContaining(payload)
             ])
         );
+    });
+
+    test('Test Case 07 - Edit room', async ({ request }) => {
+        const getRooms = await apiHelper.getAllRooms(request);
+        const allRooms = await getRooms.json();
+        const lastButOneID = allRooms[allRooms.length - 2];
+        // console.log("lastButOneID:", lastButOneID)
+
+        const payload = fakeDataGenerator.editRoomData(lastButOneID.id);
+        // console.log("payload:", payload)
+
+        const editRoom = await apiHelper.editRoom(request, lastButOneID.id, payload);
+        // const editedRoom = await editRoom.json();
+        // console.log("editedRoom:", editedRoom)
+        expect(editRoom.ok()).toBeTruthy();
+        expect(await editRoom.json()).not.toEqual(lastButOneID);
+
+        const getRoomById = await apiHelper.getRoomById(request, lastButOneID.id);
+        expect(await getRoomById.json()).toEqual(payload);
     });
 
 

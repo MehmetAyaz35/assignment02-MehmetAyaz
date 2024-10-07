@@ -137,7 +137,19 @@ export class APIHelper {
         return createResponse;
     };
 
-
+    async editRoom(request: APIRequestContext, id: string, payload: object) {
+        const response = await request.put(`${this.baseUrl}/room/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload)
+        });
+        return response;
+    };
 
     
 

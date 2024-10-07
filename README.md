@@ -56,7 +56,7 @@ To run these tests, ensure the following:
 
 npx playwright test
  ```
- or 
+   or 
 
 ```bash
 
@@ -70,7 +70,7 @@ npm run test
 
 npx playwright test --ui
  ```
- or
+   or
 
 ```bash
 
@@ -107,15 +107,11 @@ This command ensures your test file runs with the environment variables loaded f
 ## Project Structure
 The key files and folders in the project are:
 
-testsuite.spec.ts: Contains the API test cases, including create, update, delete, and fetch operations for rooms and clients.
-apiHelper.ts: Provides helper functions for making API requests such as login, get all rooms, delete a room, etc.
-testData.ts: Contains utility functions to generate fake test data using Faker, such as generating client or room data.
-playwright.config.ts: Playwright's configuration file, specifying test settings, retry policies, and reporter settings.
-.env: Configuration file for storing environment variables.
-package.json: Contains the project’s npm scripts and dependencies.
-.gitignore: Ensures sensitive files such as .env, node_modules, and test result directories are not tracked by Git.
+- testsuite.spec.ts: Contains the API test cases, including create, update, delete, and fetch operations for rooms and clients.
+- apiHelper.ts: Provides helper functions for making API requests such as login, get all rooms, delete a room, etc.
+- testData.ts: Contains utility functions to generate fake test data using Faker, such as generating client or room data.
+- playwright.config.ts: Playwright's configuration file, specifying test settings, retry policies, and reporter settings.
+- .env: Configuration file for storing environment variables.
+- package.json: Contains the project’s npm scripts and dependencies.
+- .gitignore: Ensures sensitive files such as .env, node_modules, and test result directories are not tracked by Git.
 
-## Additional Notes
-Ensure Docker is running before starting your tests.
-In case you encounter errors during testing, ensure that the .env file has the correct values and that the Docker container is running on the correct port.
-Reports for test runs can be found in the playwright-report directory after the tests are executed.

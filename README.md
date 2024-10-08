@@ -24,12 +24,12 @@ To run these tests, ensure the following:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/MehmetAyaz35/assignment02-MehmetAyaz.git
+   git clone https://github.com/MehmetAyaz35/assignment02-mehmetayaz.git
    ```
 2. **Navigate to the project directory**:
 
    ```bash
-   cd assignment02-MehmetAyaz
+   cd assignment02-mehmetayaz
     ```
 3. **Install project dependencies**:
 
